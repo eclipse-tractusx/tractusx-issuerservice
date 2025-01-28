@@ -18,20 +18,17 @@
 #################################################################################
 
 
-fullnameOverride: tx-ih
+fullnameOverride: tx-is
 ################################
-identityhub:
+issuerservice:
   debug:
     enabled: true
     port: 1044
     suspendOnStart: false
-  endpoints:
-    identity:
-      authKey: password
   image:
     pullPolicy: Never
     tag: "latest"
-    repository: "identityhub"
+    repository: "issuerservice"
   securityContext:
     # avoids some errors in the log: cannot write temp files of large multipart requests when R/O
     readOnlyRootFilesystem: false

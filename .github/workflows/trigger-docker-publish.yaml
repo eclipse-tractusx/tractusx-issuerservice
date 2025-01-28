@@ -53,7 +53,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        variant: [ { dir: runtimes/identityhub, img: identityhub }]
+        variant: [ { dir: runtimes/issuerservice, img: issuerservice }]
     permissions:
       contents: write
     steps:

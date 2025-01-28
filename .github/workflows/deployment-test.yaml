@@ -37,33 +37,12 @@ jobs:
           path: /var/lib/containerd/io.containerd.snapshotter.v1.overlayfs
           key: ${{ runner.os }}-io.containerd.snapshotter.v1.overlayfs
 
-#  test-in-memory:
-#    runs-on: ubuntu-latest
-#    needs: test-prepare
-#    steps:
-#      - uses: actions/checkout@v4
-#      - uses: ./.github/actions/run-deployment-test
-#        name: "Run deployment test using KinD and Helm"
-#        with:
-#          imagename: edc-runtime-memory
-#          rootDir: edc-controlplane/edc-runtime-memory
-#          helm_command: |-
-#            helm install tx-inmem charts/tractusx-connector-memory \
-#            -f edc-tests/deployment/src/main/resources/helm/tractusx-connector-memory-test.yaml \
-#            --wait-for-jobs --timeout=120s --dependency-update
-#
-#            # wait for the pod to become ready
-#            kubectl rollout status deployment tx-inmem
-#
-#            # execute the helm test
-#            helm test tx-inmem
-
   is-hashicorp-postgres:
     runs-on: ubuntu-latest
     needs: test-prepare
     strategy:
       fail-fast: false
-      # this will verify that the official distribution of the Tractus-X IdentityHub Helm chart runs on the last 3 Kubernetes versions
+      # this will verify that the official distribution of the Tractus-X IssuerService Helm chart runs on the last 3 Kubernetes versions
       matrix:
         k8s-version: [ "v1.31.0",
                        "v1.30.4",
@@ -79,47 +58,12 @@ jobs:
           k8sversion: ${{ matrix.k8s-version }}
           helm_command: |-
             helm install tx-is charts/tractusx-issuerservice \
-            -f tests/deployment/test-helm-values.yaml \
-            --dependency-update \
-            --wait-for-jobs --timeout=120s    
+             -f tests/deployment/test-helm-values.yaml \
+             --dependency-update \
+             --wait-for-jobs --timeout=120s    
 
             # wait for the pod to become ready
             kubectl rollout status deployment tx-is
 
             # execute the helm test using token based auth in the Identity API
             helm test tx-is
-
-  is-in-memory:
-    runs-on: ubuntu-latest
-    needs: test-prepare
-    strategy:
-      fail-fast: false
-      # this will verify that the official distribution of the Tractus-X IdentityHub Helm chart runs on the last 3 Kubernetes versions
-      matrix:
-        k8s-version: [ "v1.31.0",
-                       "v1.30.4",
-                       "v1.29.8" ]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - uses: ./.github/actions/run-deployment-test
-        name: "Run deployment test using KinD and Helm"
-        with:
-          imagename: "issuerservice-memory"
-          rootDir: "runtimes/issuerservice-memory"
-          k8sversion: ${{ matrix.k8s-version }}
-          helm_command: |-
-            helm install tx-ism charts/tractusx-issuerservice-memory \
-            --set "issuerservice.endpoints.identity.authKey=password" \
-            --set "issuerservice.securityContext.readOnlyRootFilesystem=false" \
-            --set "fullnameOverride=tx-ihm" \
-            --set "issuerservice.image.pullPolicy=Never" \
-            --set "issuerservice.image.tag=latest" \
-            --set "issuerservice.image.repository=issuerservice-memory" \
-            --wait-for-jobs --timeout=120s --dependency-update    
-
-            # wait for the pod to become ready
-            kubectl rollout status deployment tx-ism
-
-            # execute the helm test using token based auth in the Identity API
-            helm test tx-ism

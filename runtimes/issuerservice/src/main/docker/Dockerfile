@@ -39,7 +39,7 @@ RUN adduser \
 USER "$APP_USER"
 WORKDIR /app
 
-COPY ${JAR} identityhub.jar
+COPY ${JAR} issuerservice.jar
 COPY ${OTEL_JAR} opentelemetry-javaagent.jar
 COPY ${ADDITIONAL_FILES} ./
 
@@ -51,4 +51,4 @@ ENTRYPOINT ["java", \
      "-Dedc.fs.config=/app/configuration.properties", \
      "-Djava.security.egd=file:/dev/urandom", \
      "-jar", \
-     "identityhub.jar"]
+     "issuerservice.jar"]

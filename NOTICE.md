@@ -1,4 +1,4 @@
-# Notices for Eclipse Tractus-X IdentityHub
+# Notices for Eclipse Tractus-X IssuerService
 
 This content is produced and maintained by the Eclipse Tractus-X project.
 
@@ -36,7 +36,7 @@ SPDX-License-Identifier: CC-BY-4.0
 The project maintains the following source code repositories
 in the GitHub organization <https://github.com/eclipse-tractusx>:
 
-* <https://github.com/eclipse-tractusx/tractusx-identityhub>
+* <https://github.com/eclipse-tractusx/tractusx-issuerservice>
 
 ## Third-party Content
 
