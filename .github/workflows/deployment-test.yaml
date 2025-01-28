@@ -58,7 +58,7 @@ jobs:
 #            # execute the helm test
 #            helm test tx-inmem
 
-  ih-hashicorp-postgres:
+  is-hashicorp-postgres:
     runs-on: ubuntu-latest
     needs: test-prepare
     strategy:
@@ -74,22 +74,22 @@ jobs:
       - uses: ./.github/actions/run-deployment-test
         name: "Run deployment test using KinD and Helm"
         with:
-          imagename: "identityhub"
-          rootDir: "runtimes/identityhub"
+          imagename: "issuerservice"
+          rootDir: "runtimes/issuerservice"
           k8sversion: ${{ matrix.k8s-version }}
           helm_command: |-
-            helm install tx-ih charts/tractusx-identityhub \
+            helm install tx-is charts/tractusx-issuerservice \
             -f tests/deployment/test-helm-values.yaml \
             --dependency-update \
             --wait-for-jobs --timeout=120s    
 
             # wait for the pod to become ready
-            kubectl rollout status deployment tx-ih
+            kubectl rollout status deployment tx-is
 
             # execute the helm test using token based auth in the Identity API
-            helm test tx-ih
+            helm test tx-is
 
-  ih-in-memory:
+  is-in-memory:
     runs-on: ubuntu-latest
     needs: test-prepare
     strategy:
@@ -105,21 +105,21 @@ jobs:
       - uses: ./.github/actions/run-deployment-test
         name: "Run deployment test using KinD and Helm"
         with:
-          imagename: "identityhub-memory"
-          rootDir: "runtimes/identityhub-memory"
+          imagename: "issuerservice-memory"
+          rootDir: "runtimes/issuerservice-memory"
           k8sversion: ${{ matrix.k8s-version }}
           helm_command: |-
-            helm install tx-ihm charts/tractusx-identityhub-memory \
-            --set "identityhub.endpoints.identity.authKey=password" \
-            --set "identityhub.securityContext.readOnlyRootFilesystem=false" \
+            helm install tx-ism charts/tractusx-issuerservice-memory \
+            --set "issuerservice.endpoints.identity.authKey=password" \
+            --set "issuerservice.securityContext.readOnlyRootFilesystem=false" \
             --set "fullnameOverride=tx-ihm" \
-            --set "identityhub.image.pullPolicy=Never" \
-            --set "identityhub.image.tag=latest" \
-            --set "identityhub.image.repository=identityhub-memory" \
+            --set "issuerservice.image.pullPolicy=Never" \
+            --set "issuerservice.image.tag=latest" \
+            --set "issuerservice.image.repository=issuerservice-memory" \
             --wait-for-jobs --timeout=120s --dependency-update    
 
             # wait for the pod to become ready
-            kubectl rollout status deployment tx-ihm
+            kubectl rollout status deployment tx-ism
 
             # execute the helm test using token based auth in the Identity API
-            helm test tx-ihm
+            helm test tx-ism
