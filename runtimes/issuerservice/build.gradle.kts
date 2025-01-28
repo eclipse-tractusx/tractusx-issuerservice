@@ -19,22 +19,23 @@
 
 plugins {
     `java-library`
+    id("application")
+    alias(libs.plugins.shadow)
 }
 
 dependencies {
-    implementation(libs.edc.spi.core)
-    implementation(libs.edc.spi.transaction)
-    implementation(libs.edc.spi.transaction.datasource)
-    implementation(libs.edc.lib.sql)
-    implementation(libs.edc.core.sql)
-
-    implementation(libs.flyway.core)
-    // starting from flyway 10, they've moved to a more modular structure,
-    // so we need to add PG support explicitly
-    // https://documentation.red-gate.com/flyway/release-notes-and-older-versions/release-notes-for-flyway-engine
-    runtimeOnly(libs.flyway.database.postgres)
-
-    testImplementation(libs.edc.junit)
-    testImplementation(testFixtures(libs.edc.core.sql))
+    // used for the runtime
+    runtimeOnly(libs.bom.issuer)
+    runtimeOnly(libs.edc.vault.hashicorp)
+    runtimeOnly(project(":extensions:store:sql:migrations"))
+    runtimeOnly(libs.postgres)
 }
 
+tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
+    mergeServiceFiles()
+    archiveFileName.set("${project.name}.jar")
+}
+
+application {
+    mainClass.set("org.eclipse.edc.boot.system.runtime.BaseRuntime")
+}
