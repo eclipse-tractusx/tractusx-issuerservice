@@ -36,8 +36,44 @@ data:
   ## POSTGRESQL ##
   ################
 
-  # participant context
+  # issuance process
   edc.sql.store.issuanceprocess.datasource: "issuanceprocess"
   edc.datasource.issuanceprocess.url: {{ tpl .Values.postgresql.jdbcUrl . | quote }}
   edc.datasource.issuanceprocess.user: {{ .Values.postgresql.auth.username | quote }}
   edc.datasource.issuanceprocess.password: {{ .Values.postgresql.auth.password | quote }}
+
+  # attestation def
+  edc.sql.store.attestationdefinitions.datasource: "attestationdefinitions"
+  edc.datasource.attestationdefinitions.url: {{ tpl .Values.postgresql.jdbcUrl . | quote }}
+  edc.datasource.attestationdefinitions.user: {{ .Values.postgresql.auth.username | quote }}
+  edc.datasource.attestationdefinitions.password: {{ .Values.postgresql.auth.password | quote }}
+
+  # credential def
+  edc.sql.store.credentialdefinitions.datasource: "credentialdefinitions"
+  edc.datasource.credentialdefinitions.url: {{ tpl .Values.postgresql.jdbcUrl . | quote }}
+  edc.datasource.credentialdefinitions.user: {{ .Values.postgresql.auth.username | quote }}
+  edc.datasource.credentialdefinitions.password: {{ .Values.postgresql.auth.password | quote }}
+
+  # did documents
+  edc.sql.store.didresource.datasource: "didresource"
+  edc.datasource.didresource.url: {{ tpl .Values.postgresql.jdbcUrl . | quote }}
+  edc.datasource.didresource.user: {{ .Values.postgresql.auth.username | quote }}
+  edc.datasource.didresource.password: {{ .Values.postgresql.auth.password | quote }}
+
+  # STS Client
+  edc.sql.store.stsclient.datasource: "stsclient"
+  edc.datasource.stsclient.url: {{ tpl .Values.postgresql.jdbcUrl . | quote }}
+  edc.datasource.stsclient.user: {{ .Values.postgresql.auth.username | quote }}
+  edc.datasource.stsclient.password: {{ .Values.postgresql.auth.password | quote }}
+
+  # Participants
+  edc.sql.store.participantcontext.datasource: "participantcontext"
+  edc.datasource.participantcontext.url: {{ tpl .Values.postgresql.jdbcUrl . | quote }}
+  edc.datasource.participantcontext.user: {{ .Values.postgresql.auth.username | quote }}
+  edc.datasource.participantcontext.password: {{ .Values.postgresql.auth.password | quote }}
+
+  # JTI validation
+  edc.sql.store.jti.datasource: "jti"
+  edc.datasource.jti.url: {{ tpl .Values.postgresql.jdbcUrl . | quote }}
+  edc.datasource.jti.user: {{ .Values.postgresql.auth.username | quote }}
+  edc.datasource.jti.password: {{ .Values.postgresql.auth.password | quote }}
