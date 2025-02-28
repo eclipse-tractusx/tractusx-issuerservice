@@ -67,10 +67,22 @@ data:
   edc.datasource.stsclient.password: {{ .Values.postgresql.auth.password | quote }}
 
   # Participants
+  edc.sql.store.participant.datasource: "participant"
+  edc.datasource.participant.url: {{ tpl .Values.postgresql.jdbcUrl . | quote }}
+  edc.datasource.participant.user: {{ .Values.postgresql.auth.username | quote }}
+  edc.datasource.participant.password: {{ .Values.postgresql.auth.password | quote }}
+
+  # Participants Contexts
   edc.sql.store.participantcontext.datasource: "participantcontext"
   edc.datasource.participantcontext.url: {{ tpl .Values.postgresql.jdbcUrl . | quote }}
   edc.datasource.participantcontext.user: {{ .Values.postgresql.auth.username | quote }}
   edc.datasource.participantcontext.password: {{ .Values.postgresql.auth.password | quote }}
+
+  # KeyPairs
+  edc.sql.store.keypair.datasource: "keypair"
+  edc.datasource.keypair.url: {{ tpl .Values.postgresql.jdbcUrl . | quote }}
+  edc.datasource.keypair.user: {{ .Values.postgresql.auth.username | quote }}
+  edc.datasource.keypair.password: {{ .Values.postgresql.auth.password | quote }}
 
   # JTI validation
   edc.sql.store.jti.datasource: "jti"

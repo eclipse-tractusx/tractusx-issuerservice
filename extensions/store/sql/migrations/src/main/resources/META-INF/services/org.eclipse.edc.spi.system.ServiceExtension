@@ -22,5 +22,7 @@ org.eclipse.tractusx.issuerservice.postgresql.migration.AttestationDefinitionMig
 org.eclipse.tractusx.issuerservice.postgresql.migration.CredentialDefinitionMigrationExtension
 org.eclipse.tractusx.issuerservice.postgresql.migration.DidResourceMigrationExtension
 org.eclipse.tractusx.issuerservice.postgresql.migration.ParticipantMigrationExtension
+org.eclipse.tractusx.issuerservice.postgresql.migration.ParticipantContextMigrationExtension
+org.eclipse.tractusx.issuerservice.postgresql.migration.KeyPairResourceMigrationExtension
 org.eclipse.tractusx.issuerservice.postgresql.migration.StsClientMigrationExtension
 org.eclipse.tractusx.issuerservice.postgresql.migration.JtiValidationMigrationExtension

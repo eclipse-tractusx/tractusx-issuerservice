@@ -23,8 +23,8 @@ import org.eclipse.edc.runtime.metamodel.annotation.Extension;
 import org.eclipse.edc.runtime.metamodel.annotation.Inject;
 import org.eclipse.edc.spi.security.Vault;
 
-@Extension("Participant Migration Extension")
-public class ParticipantMigrationExtension extends AbstractPostgresqlMigrationExtension {
+@Extension("Participant Context Migration Extension")
+public class ParticipantContextMigrationExtension extends AbstractPostgresqlMigrationExtension {
 
     @Inject
     private Vault vault;
@@ -36,6 +36,6 @@ public class ParticipantMigrationExtension extends AbstractPostgresqlMigrationEx
 
     @Override
     protected String getSubsystemName() {
-        return "participant";
+        return "participantcontext";
     }
 }
