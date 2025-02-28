@@ -31,9 +31,6 @@ metadata:
     {{- include "issuerservice.labels" . | nindent 4 }}
 data:
 
-  edc.sts.account.api.url: {{ .Values.sts.accountapi.url | quote }}
-  edc.sts.accounts.api.auth.header.value: {{ .Values.sts.accountapi.headervalue | quote }}
-
   #######
   # API #
   #######
@@ -57,3 +54,8 @@ data:
   edc.vault.hashicorp.health.check.standby.ok: {{ .Values.vault.hashicorp.healthCheck.standbyOk | quote }}
   edc.vault.hashicorp.api.secret.path: {{ .Values.vault.hashicorp.paths.secret | quote }}
   edc.vault.hashicorp.api.health.check.path: {{ .Values.vault.hashicorp.paths.health | quote }}
+
+  #################
+  ## APPLICATION ##
+  #################
+  edc.issuer.statuslist.signing.key.alias: {{ .Values.statuslist.signing_key.alias | required ".Values.statuslist.signing.key.alias is required" | quote }}

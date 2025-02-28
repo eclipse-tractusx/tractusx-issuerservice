@@ -265,7 +265,7 @@ tests:
   hookDeletePolicy: before-hook-creation,hook-succeeded
 
 postgresql:
-  jdbcUrl: "jdbc:postgresql://{{ .Release.Name }}-postgresql:5432/ih"
+  jdbcUrl: "jdbc:postgresql://{{ .Release.Name }}-postgresql:5432/issuer"
   primary:
     persistence:
       enabled: false
@@ -287,7 +287,7 @@ postgresql:
         cpu: 250m
         memory: 256Mi
   auth:
-    database: "ih"
+    database: "issuer"
     username: "user"
     password: "password"
 
@@ -310,7 +310,6 @@ vault:
       secret: /v1/secret
       health: /v1/sys/health
 
-sts:
-  accountapi:
-    url: https://sts.com/api/accounts
-    headervalue: "sup3r$3cr3t"
+statuslist:
+  signing_key:
+      alias:

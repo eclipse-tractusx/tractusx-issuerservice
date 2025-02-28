@@ -30,5 +30,14 @@ metadata:
   labels:
     {{- include "issuerservice.labels" . | nindent 4 }}
 
-# Data:
-# todo: add datasource configuration here
+data:
+
+  ################
+  ## POSTGRESQL ##
+  ################
+
+  # participant context
+  edc.sql.store.issuanceprocess.datasource: "issuanceprocess"
+  edc.datasource.issuanceprocess.url: {{ tpl .Values.postgresql.jdbcUrl . | quote }}
+  edc.datasource.issuanceprocess.user: {{ .Values.postgresql.auth.username | quote }}
+  edc.datasource.issuanceprocess.password: {{ .Values.postgresql.auth.password | quote }}

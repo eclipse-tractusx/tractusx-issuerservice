@@ -287,7 +287,7 @@ postgresql:
         cpu: 250m
         memory: 256Mi
   auth:
-    database: "ih"
+    database: "issuer"
     username: "user"
     password: "password"
 

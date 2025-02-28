@@ -17,26 +17,25 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-plugins {
-    `java-library`
-    id("application")
-    alias(libs.plugins.shadow)
-}
+package org.eclipse.tractusx.issuerservice.postgresql.migration;
 
-dependencies {
-    // used for the runtime
-    runtimeOnly(libs.bom.issuer)
-    runtimeOnly(libs.bom.issuer.sql)
-    runtimeOnly(libs.edc.vault.hashicorp)
-    runtimeOnly(project(":extensions:store:sql:migrations"))
-    runtimeOnly(libs.postgres)
-}
+import org.eclipse.edc.runtime.metamodel.annotation.Extension;
+import org.eclipse.edc.runtime.metamodel.annotation.Inject;
+import org.eclipse.edc.spi.security.Vault;
 
-tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
-    mergeServiceFiles()
-    archiveFileName.set("${project.name}.jar")
-}
+@Extension("Issuance Process Migration Extension")
+public class IssuanceProcessMigrationExtension extends AbstractPostgresqlMigrationExtension {
 
-application {
-    mainClass.set("org.eclipse.edc.boot.system.runtime.BaseRuntime")
+    @Inject
+    private Vault vault;
+
+    @Override
+    protected Vault getVault() {
+        return vault;
+    }
+
+    @Override
+    protected String getSubsystemName() {
+        return "issuanceprocess";
+    }
 }

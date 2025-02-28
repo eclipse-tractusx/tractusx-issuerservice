@@ -53,7 +53,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        variant: [ { dir: runtimes/issuerservice, img: issuerservice }]
+        variant: [
+          { dir: runtimes, img: issuerservice },
+          { dir: runtimes, img: issuerservice-memory }
+        ]
     permissions:
       contents: write
     steps:

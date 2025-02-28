@@ -1,20 +1,21 @@
 /*
- * Copyright (c) 2025 Cofinity-X
+ *   Copyright (c) 2025 Cofinity-X
  *
- * See the NOTICE file(s) distributed with this work for additional
- * information regarding copyright ownership.
+ *   See the NOTICE file(s) distributed with this work for additional
+ *   information regarding copyright ownership.
  *
- * This program and the accompanying materials are made available under the
- * terms of the Apache License, Version 2.0 which is available at
- * https://www.apache.org/licenses/LICENSE-2.0.
+ *   This program and the accompanying materials are made available under the
+ *   terms of the Apache License, Version 2.0 which is available at
+ *   https://www.apache.org/licenses/LICENSE-2.0.
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations
- * under the License.
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ *   WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ *   License for the specific language governing permissions and limitations
+ *   under the License.
  *
- * SPDX-License-Identifier: Apache-2.0
+ *   SPDX-License-Identifier: Apache-2.0
+ *
  */
 
 import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
@@ -29,12 +30,14 @@ plugins {
 
 buildscript {
     dependencies {
-        val edcVersion: String by project
-        classpath("org.eclipse.edc.edc-build:org.eclipse.edc.edc-build.gradle.plugin:${edcVersion}")
+        classpath(libs.edc.build.plugin)
     }
 }
 
-val edcVersion: String by project
+val txScmConnection: String by project
+val txWebsiteUrl: String by project
+val txScmUrl: String by project
+val edcVersion = libs.versions.edc
 
 allprojects {
     apply(plugin = "org.eclipse.edc.edc-build")
@@ -43,6 +46,17 @@ allprojects {
     configure<org.eclipse.edc.plugins.autodoc.AutodocExtension> {
         outputDirectory.set(project.layout.buildDirectory.asFile)
         processorVersion.set(edcVersion)
+    }
+    configure<org.eclipse.edc.plugins.edcbuild.extensions.BuildExtension> {
+        pom {
+            // this is actually important, so we can publish under the correct GID
+            groupId = project.group.toString()
+            projectName.set(project.name)
+            description.set("edc :: ${project.name}")
+            projectUrl.set(txWebsiteUrl)
+            scmConnection.set(txScmConnection)
+            scmUrl.set(txScmUrl)
+        }
     }
 }
 // the "dockerize" task is added to all projects that use the `shadowJar` plugin, e.g. runtimes
@@ -65,17 +79,10 @@ subprojects {
             }
 
             // this task copies some legal docs into the build folder, so we can easily copy them into the docker images
-            val copyLegalDocs = tasks.register("copyLegalDocs", Copy::class) {
-
-                into("${project.layout.buildDirectory.asFile.get()}")
-                into("legal") {
-                    from("${project.rootProject.projectDir}/SECURITY.md")
-                    from("${project.rootProject.projectDir}/NOTICE.md")
-                    from("${project.rootProject.projectDir}/DEPENDENCIES")
-                    from("${project.rootProject.projectDir}/LICENSE")
-                    from("${projectDir}/notice.md")
-
-                }
+            val copyLegalDocs = tasks.create("copyLegalDocs", Copy::class) {
+                from(project.rootProject.projectDir)
+                into("build/legal")
+                include("SECURITY.md", "NOTICE.md", "DEPENDENCIES", "LICENSE")
             }
 
             tasks.named(JavaPlugin.JAR_TASK_NAME).configure {

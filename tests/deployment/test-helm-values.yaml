@@ -34,7 +34,7 @@ issuerservice:
     readOnlyRootFilesystem: false
 
 postgresql:
-  jdbcUrl: jdbc:postgresql://{{ .Release.Name }}-postgresql:5432/ih
+  jdbcUrl: jdbc:postgresql://{{ .Release.Name }}-postgresql:5432/issuer
   auth:
     username: user
     password: password
@@ -61,3 +61,7 @@ vault:
         }
 tests:
   hookDeletePolicy: before-hook-creation
+
+statuslist:
+  signing_key:
+      alias: "signing-key-alias"

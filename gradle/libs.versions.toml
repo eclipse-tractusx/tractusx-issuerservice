@@ -18,6 +18,7 @@ edc-core-sql = { module = "org.eclipse.edc:sql-core", version.ref = "edc" }
 edc-junit = { module = "org.eclipse.edc:junit", version.ref = "edc" }
 edc-lib-sql = { module = "org.eclipse.edc:sql-lib", version.ref = "edc" }
 edc-vault-hashicorp = { module = "org.eclipse.edc:vault-hashicorp", version.ref = "edc" }
+edc-build-plugin = { module = "org.eclipse.edc.edc-build:org.eclipse.edc.edc-build.gradle.plugin", version.ref = "edc" }
 
 # EDC SPIs
 edc-spi-transaction = { module = "org.eclipse.edc:transaction-spi", version.ref = "edc" }
@@ -25,6 +26,7 @@ edc-spi-transaction-datasource = { module = "org.eclipse.edc:transaction-datasou
 
 # BOM modules
 bom-issuer = { module = "org.eclipse.edc:issuerservice-bom", version.ref = "ih" }
+bom-issuer-sql = { module = "org.eclipse.edc:issuerservice-feature-sql-bom", version.ref = "ih" }
 
 # Third party libs
 opentelemetry-javaagent = { module = "io.opentelemetry.javaagent:opentelemetry-javaagent", version.ref = "opentelemetry" }
