@@ -44,16 +44,5 @@ appVersion: "0.1.0"
 home: https://github.com/eclipse-tractusx/tractusx-issuerservice/tree/main/charts/tractusx-issuerservice
 sources:
   - https://github.com/eclipse-tractusx/tractusx-issuerservice/tree/main/charts/tractusx-issuerservice
-dependencies:
-  # PostgreSQL
-  - name: postgresql
-    alias: postgresql
-    version: 16.3.5
-    repository: https://charts.bitnami.com/bitnami
-    condition: install.postgresql
-  # HashiCorp Vault
-  - name: vault
-    alias: vault
-    version: 0.29.1
-    repository: https://helm.releases.hashicorp.com
-    condition: install.vault
+
+# no dependencies here

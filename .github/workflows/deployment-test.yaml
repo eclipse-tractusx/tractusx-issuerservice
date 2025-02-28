@@ -92,9 +92,10 @@ jobs:
               --set "fullnameOverride=tx-ism" \
               --set "issuerservice.image.pullPolicy=Never" \
               --set "issuerservice.image.tag=latest" \
+              --set "statuslist.signing_key.alias=signing-key-alias" \
               --set "issuerservice.image.repository=issuerservice-memory" \
              --dependency-update \
-             --wait-for-jobs --timeout=120s    
+             --wait-for-jobs --timeout=120s
 
             # wait for the pod to become ready
             kubectl rollout status deployment tx-ism

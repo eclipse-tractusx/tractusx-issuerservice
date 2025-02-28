@@ -22,10 +22,6 @@
 # Declare variables to be passed into your templates.
 
 
-install:
-  postgresql: true
-  vault: true
-
 fullnameOverride: ""
 nameOverride: ""
 # -- Existing image pull secret to use to [obtain the container image from private registries](https://kubernetes.io/docs/concepts/containers/images/#using-a-private-registry)
@@ -264,53 +260,6 @@ tests:
   # -- Configure the hook-delete-policy for Helm tests
   hookDeletePolicy: before-hook-creation,hook-succeeded
 
-postgresql:
-  jdbcUrl: "jdbc:postgresql://{{ .Release.Name }}-postgresql:5432/ih"
-  primary:
-    persistence:
-      enabled: false
-    resources:
-      limits:
-        cpu: 1
-        memory: 1Gi
-      requests:
-        cpu: 250m
-        memory: 256Mi
-  readReplicas:
-    persistence:
-      enabled: false
-    resources:
-      limits:
-        cpu: 500Mi
-        memory: 1Gi
-      requests:
-        cpu: 250m
-        memory: 256Mi
-  auth:
-    database: "issuer"
-    username: "user"
-    password: "password"
-
-vault:
-  injector:
-    enabled: false
-  server:
-    dev:
-      enabled: true
-      devRootToken: "root"
-    postStart:    # must be set externally!
-  hashicorp:
-    url: "http://{{ .Release.Name }}-vault:8200"
-    token: "root"
-    timeout: 30
-    healthCheck:
-      enabled: true
-      standbyOk: true
-    paths:
-      secret: /v1/secret
-      health: /v1/sys/health
-
-sts:
-  accountapi:
-    url: https://sts.com/api/accounts
-    headervalue: "sup3r$3cr3t"
+statuslist:
+  signing_key:
+    alias:

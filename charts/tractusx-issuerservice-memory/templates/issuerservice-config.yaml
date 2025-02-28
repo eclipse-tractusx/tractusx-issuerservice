@@ -31,9 +31,6 @@ metadata:
     {{- include "issuerservice.labels" . | nindent 4 }}
 data:
 
-  edc.sts.account.api.url: {{ .Values.sts.accountapi.url | quote }}
-  edc.sts.accounts.api.auth.header.value: {{ .Values.sts.accountapi.headervalue | quote }}
-
   #######
   # API #
   #######
@@ -47,13 +44,7 @@ data:
   web.http.did.port: {{ .Values.issuerservice.endpoints.did.port | quote}}
   web.http.did.path: {{ .Values.issuerservice.endpoints.did.path | quote}}
 
-  ###########
-  ## VAULT ##
-  ###########
-  edc.vault.hashicorp.url: {{ tpl .Values.vault.hashicorp.url . | quote }}
-  edc.vault.hashicorp.token: {{ .Values.vault.hashicorp.token | required ".Values.vault.hashicorp.token is required" | quote }}
-  edc.vault.hashicorp.timeout.seconds: {{ .Values.vault.hashicorp.timeout | quote }}
-  edc.vault.hashicorp.health.check.enabled: {{ .Values.vault.hashicorp.healthCheck.enabled | quote }}
-  edc.vault.hashicorp.health.check.standby.ok: {{ .Values.vault.hashicorp.healthCheck.standbyOk | quote }}
-  edc.vault.hashicorp.api.secret.path: {{ .Values.vault.hashicorp.paths.secret | quote }}
-  edc.vault.hashicorp.api.health.check.path: {{ .Values.vault.hashicorp.paths.health | quote }}
+  #################
+  ## APPLICATION ##
+  #################
+  edc.issuer.statuslist.signing.key.alias: {{ .Values.statuslist.signing_key.alias | required ".Values.statuslist.signing.key.alias is required" | quote }}
